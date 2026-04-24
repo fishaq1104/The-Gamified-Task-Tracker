@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuestList - Gamified Task Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Chakra+Petch:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-art" aria-hidden="true">
+      <span class="orb orb-a"></span>
+      <span class="orb orb-b"></span>
+      <span class="orb orb-c"></span>
+      <span class="grid"></span>
+    </div>
+
+    <main class="app">
+      <header class="hero card">
+        <p class="eyebrow">Productivity Quest</p>
+        <h1>QuestList</h1>
+        <p class="subtitle">
+          Turn your daily tasks into a progression game. Complete tasks, gain XP,
+          level up, and collect badges.
+        </p>
+      </header>
+
+      <section class="stats card" aria-label="Progress overview">
+        <article>
+          <p class="label">Level</p>
+          <p class="value" id="level">1</p>
+        </article>
+        <article>
+          <p class="label">XP</p>
+          <p class="value"><span id="xp">0</span> / <span id="xp-goal">100</span></p>
+        </article>
+        <article>
+          <p class="label">Streak</p>
+          <p class="value"><span id="streak">0</span> days</p>
+        </article>
+        <article>
+          <p class="label">Completed</p>
+          <p class="value" id="completed-total">0</p>
+        </article>
+      </section>
+
+      <section class="progress card">
+        <div class="progress-row">
+          <span>Current level progress</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </section>
+
+      <section class="task-panel card">
+        <h2>Add New Quest</h2>
+        <form id="task-form" class="task-form" autocomplete="off">
+          <label for="task-title">Task title</label>
+          <input id="task-title" name="task-title" type="text" maxlength="80" required placeholder="Study algorithms for 45 minutes" />
+
+          <label for="task-category">Category</label>
+          <select id="task-category" name="task-category">
+            <option value="study" selected>Study</option>
+            <option value="coding">Coding</option>
+            <option value="health">Health</option>
+            <option value="career">Career</option>
+          </select>
+
+          <label for="task-difficulty">Difficulty</label>
+          <select id="task-difficulty" name="task-difficulty">
+            <option value="easy">Easy (+10 XP)</option>
+            <option value="medium" selected>Medium (+20 XP)</option>
+            <option value="hard">Hard (+35 XP)</option>
+          </select>
+
+          <button type="submit">Create Quest</button>
+        </form>
+      </section>
+
+      <section class="weekly card" aria-label="Weekly challenge">
+        <div class="section-head">
+          <h2>Weekly Challenge</h2>
+          <p id="weekly-reward">+60 XP reward</p>
+        </div>
+        <p id="weekly-title" class="weekly-title"></p>
+        <p id="weekly-desc" class="weekly-desc"></p>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="weekly-track">
+          <div class="progress-fill" id="weekly-fill"></div>
+        </div>
+        <p id="weekly-progress" class="weekly-progress"></p>
+      </section>
+
+      <section class="task-list card">
+        <div class="section-head">
+          <h2>Active Quests</h2>
+          <button id="clear-done" type="button" class="ghost">Clear completed</button>
+        </div>
+        <ul id="tasks" aria-live="polite"></ul>
+        <p id="empty-state" class="empty">No quests yet. Add one to begin your run.</p>
+      </section>
+
+      <section class="badges card">
+        <div class="section-head">
+          <h2>Badge Vault</h2>
+          <p id="badge-count">0 unlocked</p>
+        </div>
+        <ul id="badge-list"></ul>
+      </section>
+
+      <section class="data-tools card" aria-label="Data management">
+        <h2>Data Tools</h2>
+        <div class="data-actions">
+          <button id="export-progress" type="button" class="ghost">Export progress</button>
+          <button id="import-progress" type="button" class="ghost">Import progress</button>
+          <input id="import-file" type="file" accept="application/json" class="hidden" />
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+    <template id="task-item-template">
+      <li class="task-item">
+        <label class="task-main">
+          <input type="checkbox" class="task-check" />
+          <span class="custom-box" aria-hidden="true"></span>
+          <span class="task-copy"></span>
+        </label>
+        <div class="task-meta"></div>
+        <button type="button" class="delete-btn" aria-label="Delete task">Delete</button>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
